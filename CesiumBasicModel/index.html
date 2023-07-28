@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.107.1/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.107.1/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    
+    #toggle-building { z-index: 1; position: fixed; top: 5px; left: 5px; }
+
+    container { margin: 0 auto; min-height: 100%;}
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer" class="fullSize"></div>
+  <button id="toggle-building" class="btn btn-primary">New Building</button>
+  
+  <script type="module">
+
+
+
+    // Replace number below with buildingID of your uploaded model on cesium ion at: https://ion.cesium.com/assets
+    const buildingID= 2063004;
+    // Replace `your_access_token` with your Cesium ion access token at: https://ion.cesium.com/tokens
+    Cesium.Ion.defaultAccessToken = 'your_access_token';
+    // Replace `your_api_key` with your google maps tiles access token at https://console.cloud.google.com/google/maps-apis
+    Cesium.GoogleMaps.defaultApiKey = "your_api_key";
+    
+
+
+
+    // Initialize the viewer with Cesium World Terrain.
+  const viewer = new Cesium.Viewer("cesiumContainer", {
+    timeline: false,
+    animation: true,
+    sceneModePicker: false,
+    baseLayerPicker: false,
+    shadows: false,
+    infoBox: false,
+    selectionIndicator: false,
+    
+  });
+
+ // set lighting to true
+  viewer.scene.globe.enableLighting = true;
+  // Add Photorealistic 3D Tiles
+  try {
+    const tileset = await Cesium.createGooglePhotorealistic3DTileset();
+    viewer.scene.primitives.add(tileset);
+  } catch (error) {
+    console.log(`Error loading Photorealistic 3D Tiles tileset.
+    ${error}`);
+  }
+    // Add the 3D Tileset you created from your Cesium ion account.
+    const newBuildingTileset = await Cesium.Cesium3DTileset.fromIonAssetId(buildingID);
+    viewer.scene.primitives.add(newBuildingTileset);
+
+    // Move the camera to the new building.
+    viewer.flyTo(newBuildingTileset);
+
+    // Toggle the tileset's show property when the button is clicked.
+    document.querySelector('#toggle-building').onclick = function() {
+    newBuildingTileset.show = !newBuildingTileset.show;
+    };
+
+  // set lighting to true
+  viewer.scene.globe.enableLighting = true;
+  // adjust time so scene is lit by sun
+  viewer.clock.currentTime = Cesium.JulianDate.fromIso8601(
+    "2023-01-01T00:00:00"
+  );
+
+  </script>
+</body>
+</html>
