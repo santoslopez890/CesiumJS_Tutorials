@@ -15,18 +15,19 @@
 </head>
 <body>
   <div id="cesiumContainer" class="fullSize"></div>
-  <button id="toggle-building" class="btn btn-primary">New Building</button>
-  
+  <button id="toggle-building" class="btn btn-primary">toggle buildings off and on</button>
+  <button id="building" class="btn btn-primary">Add Buildings</button>
+  <button id="show-building" class="btn btn-primary">Show available buildings to place</button>
   <script type="module">
 
 
 
     // Replace number below with buildingID of your uploaded model on cesium ion at: https://ion.cesium.com/assets
-    const buildingID= 2063004;
+    const buildingID= 2366670;
     // Replace `your_access_token` with your Cesium ion access token at: https://ion.cesium.com/tokens
-    Cesium.Ion.defaultAccessToken = 'your_access_token';
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NTI4YWYyZC1kODliLTRmYTctOGY0ZS1hYmI1ZTgzZDJjZTIiLCJpZCI6MTgwNzExLCJpYXQiOjE3MDA5NTk0NjV9.AO522SVLSnPuAl_aYokz-g8O7jsBoKPV5Jc6tKs92EA';
     // Replace `your_api_key` with your google maps tiles access token at https://console.cloud.google.com/google/maps-apis
-    Cesium.GoogleMaps.defaultApiKey = "your_api_key";
+    Cesium.GoogleMaps.defaultApiKey = "AIzaSyAlLIRtgdevsihPWBORu7tnngXph0-WhVc";
     
 
 
